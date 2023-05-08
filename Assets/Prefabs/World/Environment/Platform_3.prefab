@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5560078068591559352}
   - component: {fileID: 5560078068591559353}
   - component: {fileID: 5560078068591559350}
+  - component: {fileID: 277890602256165999}
   m_Layer: 6
   m_Name: Platform_3
   m_TagString: BulletDestroyer
@@ -209,3 +210,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.0231724, y: 0.30780792}
   m_EdgeRadius: 0
+--- !u!114 &277890602256165999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5560078068591559348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3385fec61d805aa48b5c98c06ffbc606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -24,7 +24,9 @@ public class EnemySpawner : MonoBehaviour
                 if (_spawnPoints[i].EnemyId == _enemyTemplates[j].Id)
                 {
                     enemyForSpawn = _enemyTemplates[j];
-                    Instantiate(enemyForSpawn, _spawnPoints[i].transform.position, Quaternion.identity).GetComponent<Enemy>().SetSpittleSpawnPointRotation(_spawnPoints[i].transform.rotation);
+                    Instantiate(enemyForSpawn, _spawnPoints[i].transform.position, 
+                        Quaternion.identity).GetComponent<Enemy>().SetSpittleSpawnPointRotation
+                        (_spawnPoints[i].transform.rotation);
                 }
             }
         }

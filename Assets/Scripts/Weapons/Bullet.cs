@@ -18,7 +18,7 @@ public abstract class Bullet: MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "BulletDestroyer")
+        if (collision.gameObject.TryGetComponent(out BulletDestroyer bulletDestroyer))
         {
             Destroy(gameObject);
             Instantiate(_effect, transform.position, Quaternion.identity);

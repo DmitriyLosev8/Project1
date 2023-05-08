@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 6331646148122762041}
   - component: {fileID: 2817170884008297363}
   - component: {fileID: 1705501040577717238}
+  - component: {fileID: 2388600122506653832}
   m_Layer: 0
   m_Name: Enemy_1
   m_TagString: BulletDestroyer
@@ -314,6 +315,18 @@ MonoBehaviour:
   _spittleSpawnPoint: {fileID: 7895979118491470987}
   _delayOfSpit: 2
   _id: 1
+--- !u!114 &2388600122506653832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5509973963666540793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3385fec61d805aa48b5c98c06ffbc606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7243228113467090255
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d2a6198e788264fa980abf7732f4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 15
+  _delayDamage: 1
 --- !u!1 &7353153014191137395
 GameObject:
   m_ObjectHideFlags: 0

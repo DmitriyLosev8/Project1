@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7371473563823197601}
   - component: {fileID: 8770417664870570350}
   - component: {fileID: 6525308445945507693}
+  - component: {fileID: 3838239729869070809}
   m_Layer: 0
   m_Name: Rock
   m_TagString: BulletDestroyer
@@ -155,6 +156,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collisionEffect: {fileID: 198330214428362902, guid: a97415c6b57076f41a6621a7b51d63a3, type: 3}
+--- !u!114 &3838239729869070809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881353412919530743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3385fec61d805aa48b5c98c06ffbc606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &915894142179131886
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
+[RequireComponent(typeof(PlayerMover))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private float _speed;
+    [SerializeField] private PlayerMover _playerMover;
     [SerializeField] private float _jumpForse;
     [SerializeField] private Transform _readyToJumpChecker;
     [SerializeField] private LayerMask _ground;
@@ -13,7 +15,6 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInput _playerInput;
     private Rigidbody2D _playersRigidbody;
-    private Animator _animator;
     private Vector2 _moveDirection;
     private int _currentJumpCount = 0;
     private int _maxJumpCount = 2;
@@ -27,12 +28,12 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
         _playerInput = new PlayerInput();
         _playerInput.Enable();
         _playerInput.Player.Jump.performed += ctx => OnJump();
         _playerInput.Player.WallJump.performed += ctx => OnWallJump();
     } 
+   
     private void Start()
     {
         _playersRigidbody = _player.GetComponent<Rigidbody2D>();
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         ReadyToJumpCheker();
         _moveDirection = _playerInput.Player.Move.ReadValue<Vector2>();
-        Move(_moveDirection);
+        _playerMover.Move(_moveDirection, _isMoveBlocked);
         Reflect();
         MoveBlockedDisabler();
 
@@ -52,8 +53,10 @@ public class PlayerController : MonoBehaviour
    
     private void ReadyToJumpCheker()
     {
-        _isGrounded = Physics2D.OverlapCircle(_readyToJumpChecker.position, _readyToJumpCheckerRadius, _ground);
-        _isOnWall = Physics2D.OverlapCircle(_readyToJumpChecker.position, _readyToJumpCheckerRadius, _wall);
+        _isGrounded = Physics2D.OverlapCircle(_readyToJumpChecker.position, 
+            _readyToJumpCheckerRadius, _ground);
+        _isOnWall = Physics2D.OverlapCircle(_readyToJumpChecker.position, 
+            _readyToJumpCheckerRadius, _wall);
     }
 
     private void OnEnable()
@@ -76,28 +79,16 @@ public class PlayerController : MonoBehaviour
         _player.DetermineOfSideOfLook(_isLookRight);
     }
 
-    private void Move(Vector2 moveDirection)
+    private void Swim()
     {
-        if (!_isMoveBlocked && _moveDirection != new Vector2(0, 0))
-        {
-            float scaledMoveSpeed = _speed * Time.deltaTime;
-            transform.Translate(scaledMoveSpeed * moveDirection);
-            _animator.SetBool("IsRunning", true);
-        }          
-        else
-            _animator.SetBool("IsRunning", false);
-    }
-
-    public void Swim()
-    {
-        _isMoveBlocked = true;
-        float swimSpeed = (_speed - 1) * Time.deltaTime;
+       _isMoveBlocked = true;
+        float swimSpeed = (_playerMover.Speed - 1) * Time.deltaTime;
         transform.Translate(swimSpeed * Vector2.right);
     }
 
     private void OnJump()
     {
-        if (_isGrounded || (++_currentJumpCount < _maxJumpCount && _player.Level >= 3))
+        if (_isGrounded || (++_currentJumpCount < _maxJumpCount && _player.Level >= _player.LevelOfExtraSkills))
             _playersRigidbody.AddForce(Vector2.up * _jumpForse);
 
         if (_isGrounded)
@@ -120,6 +111,7 @@ public class PlayerController : MonoBehaviour
             WallJump(wallJumpAngle);
         }
     }
+   
     private void WallJump(Vector2 wallJumpAngle)
     {
         if (_isOnWall && !_isGrounded)
@@ -130,10 +122,12 @@ public class PlayerController : MonoBehaviour
             transform.localScale *= new Vector2(-1, 1);
             _isLookRight = !_isLookRight;
             
-            if(_player.Level < 3)
-            _playersRigidbody.velocity = new Vector2(transform.localScale.x * wallJumpAngle.x * 1.1f, wallJumpAngle.y * 3.8f);
+            if(_player.Level < _player.LevelOfExtraSkills)
+            _playersRigidbody.velocity = 
+                    new Vector2(transform.localScale.x * wallJumpAngle.x * 1.1f, wallJumpAngle.y * 3.8f);
             else
-            _playersRigidbody.velocity = new Vector2(transform.localScale.x * wallJumpAngle.x, wallJumpAngle.y);  
+            _playersRigidbody.velocity = 
+                    new Vector2(transform.localScale.x * wallJumpAngle.x, wallJumpAngle.y);  
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Animator))]
 public class Boss : MonoBehaviour
 {
     [SerializeField] private Player _targetPlayer;
@@ -12,16 +13,17 @@ public class Boss : MonoBehaviour
     [SerializeField] private Transform _spittleSpawnPoint;
     [SerializeField] private float _delayOfSpit;
 
+    private Animator _animator;
     private float _delayOfTeleport = 5f;
-    private float _speed = 500;
+    private float _speedOfTeleport = 500;
     private float _timeBetweenSpit = 5;
     private int _offSet = -90;
     private bool _readyToAttack;
-    private Animator _animator;
+    private const string _isAttack = "IsAttack";
 
     public Player TargetPlayer => _targetPlayer;
+   
     public static event UnityAction Died;
-
 
     private void Awake()
     {
@@ -64,16 +66,18 @@ public class Boss : MonoBehaviour
 
         while (true)
         {
-            _animator.SetBool("IsAttack", _readyToAttack);
+            _animator.SetBool(_isAttack, _readyToAttack);
             
             if (_readyToAttack)
             {
                 if (_targetPlayer.IsLookRight)
-                    PointToTeleport = new Vector3(_targetPlayer.transform.position.x + offSetOfTeleport, _targetPlayer.transform.position.y, _targetPlayer.transform.position.z);
+                    PointToTeleport = new Vector3(_targetPlayer.transform.position.x + offSetOfTeleport, 
+                        _targetPlayer.transform.position.y, _targetPlayer.transform.position.z);
                 else
-                    PointToTeleport = new Vector3(_targetPlayer.transform.position.x - offSetOfTeleport, _targetPlayer.transform.position.y, _targetPlayer.transform.position.z);
+                    PointToTeleport = new Vector3(_targetPlayer.transform.position.x - offSetOfTeleport,
+                        _targetPlayer.transform.position.y, _targetPlayer.transform.position.z);
 
-                transform.position = Vector3.MoveTowards(transform.position, PointToTeleport, _speed);
+                transform.position = Vector3.MoveTowards(transform.position, PointToTeleport, _speedOfTeleport);
                            
                 yield return delay;
             }     

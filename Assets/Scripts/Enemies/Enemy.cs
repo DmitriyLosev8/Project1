@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _health;
@@ -11,12 +12,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _id;
 
     private Animator _animator;
-    private float _timeBetweenSpit = 5;
-    private float _patrolDistance;
-    private float _speed;
     private Vector3 _targetPosition;
     private Vector3 _leftPatrolPoint;
     private Vector3 _rightPatrolPoint;
+    private float _timeBetweenSpit = 5;
+    private float _patrolDistance;
+    private float _speed;
+    private const string _isAttack = "IsAttack";
 
     public int Id => _id;
 
@@ -40,13 +42,13 @@ public class Enemy : MonoBehaviour
 
     private void Spit(EnemyAttackZone enemySpitZone)
     {
-            if (_timeBetweenSpit <= 0)
-            {
-                Instantiate(_enemySpittleTemplate, _spittleSpawnPoint.position, _spittleSpawnPoint.transform.rotation);
-                _timeBetweenSpit = _delayOfSpit;
-            }
-            else
-            _timeBetweenSpit -= Time.deltaTime;
+        if (_timeBetweenSpit <= 0)
+        {
+            Instantiate(_enemySpittleTemplate, _spittleSpawnPoint.position, _spittleSpawnPoint.transform.rotation);
+            _timeBetweenSpit = _delayOfSpit;
+        }
+        else
+        _timeBetweenSpit -= Time.deltaTime;
     }
 
     private void SetPatrolSpeed()
@@ -97,11 +99,11 @@ public class Enemy : MonoBehaviour
     {
         int lowBorder = 2;
         int highBorder = 6;
-        int nummerOfCatchValue = 5;
+        int numberOfCatchValue = 5;
         int chanceToAdd = Random.Range(lowBorder, highBorder);
         float priviosValueOfSpeed = _speed;
 
-        if (chanceToAdd == nummerOfCatchValue)
+        if (chanceToAdd == numberOfCatchValue)
             StartCoroutine(SetExtraSpeed(priviosValueOfSpeed));
     }
 
@@ -136,7 +138,7 @@ public class Enemy : MonoBehaviour
             if (enemySpitZone.IsEnemyNeedToSpit)
                 Spit(enemySpitZone);
                 
-            _animator.SetBool("IsAttack", enemySpitZone.IsEnemyNeedToSpit);
+            _animator.SetBool(_isAttack, enemySpitZone.IsEnemyNeedToSpit);
             yield return null;  
         }
     }

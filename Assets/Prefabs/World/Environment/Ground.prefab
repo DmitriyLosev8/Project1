@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8165854644016698645}
   - component: {fileID: 8165854644016698646}
   - component: {fileID: 8165854644016698644}
-  - component: {fileID: 8165854644016698651}
+  - component: {fileID: 8184083667112799231}
   m_Layer: 6
   m_Name: Ground
   m_TagString: BulletDestroyer
@@ -816,7 +816,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 18.753494, y: 0.09809494}
   m_EdgeRadius: 0
---- !u!114 &8165854644016698651
+--- !u!114 &8184083667112799231
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -825,7 +825,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8165854644016698640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35bf988a6b5879f449b83076c507abc1, type: 3}
+  m_Script: {fileID: 11500000, guid: 3385fec61d805aa48b5c98c06ffbc606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parallaxFactor: 0
