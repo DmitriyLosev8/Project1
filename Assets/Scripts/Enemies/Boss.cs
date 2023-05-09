@@ -19,7 +19,8 @@ public class Boss : MonoBehaviour
     private float _timeBetweenSpit = 5;
     private int _offSet = -90;
     private bool _readyToAttack;
-    private const string _isAttack = "IsAttack";
+   
+    private const string IsAttack = "IsAttack";
 
     public Player TargetPlayer => _targetPlayer;
    
@@ -66,7 +67,7 @@ public class Boss : MonoBehaviour
 
         while (true)
         {
-            _animator.SetBool(_isAttack, _readyToAttack);
+            _animator.SetBool(IsAttack, _readyToAttack);
             
             if (_readyToAttack)
             {

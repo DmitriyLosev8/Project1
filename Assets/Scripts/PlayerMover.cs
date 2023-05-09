@@ -12,7 +12,7 @@ public class PlayerMover : MonoBehaviour
     private Animator _animator;
     private bool _isMoveBlocked;
 
-    private const string _isRunning = "IsRunning";
+    private const string IsRunning = "IsRunning";
 
     public float Speed => _speed;
     public bool IsMoveBlocked => _isMoveBlocked;
@@ -29,9 +29,9 @@ public class PlayerMover : MonoBehaviour
         {
             float scaledMoveSpeed = _speed * Time.deltaTime;
             transform.Translate(scaledMoveSpeed * moveDirection);
-            _animator.SetBool(_isRunning, true);
+            _animator.SetBool(IsRunning, true);
         }
         else
-            _animator.SetBool(_isRunning, false);
+            _animator.SetBool(IsRunning, false);
     }
 }

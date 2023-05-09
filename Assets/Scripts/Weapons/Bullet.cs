@@ -8,12 +8,12 @@ public abstract class Bullet: MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private GameObject _effect;
 
-    private float _lifeTime = 8;
+    private float _lifeTime = 8f;
  
     private void Update()
     {
         transform.Translate(Vector2.up * _speed * Time.deltaTime);
-        SelfDestroyer();
+        Destroy(gameObject, _lifeTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,25 +25,9 @@ public abstract class Bullet: MonoBehaviour
         }
 
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
-        {
             enemy.TakeDamage(_damage);
-            Destroy(gameObject);
-        }
 
         if(collision.gameObject.TryGetComponent(out Boss boss))
-        {
             boss.TakeDamage(_damage);
-            Destroy(gameObject);
-        }     
-    }
-
-    private void SelfDestroyer()
-    {
-        _lifeTime -= Time.deltaTime;
-
-        if (_lifeTime <= 0)
-        {
-            Destroy(gameObject);
-        }
     }
 }

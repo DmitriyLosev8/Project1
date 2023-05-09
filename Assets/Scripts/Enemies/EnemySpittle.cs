@@ -13,7 +13,7 @@ public class EnemySpittle : MonoBehaviour
     private void Update()
     {
         transform.Translate(Vector2.up * _speed * Time.deltaTime);
-        Destroyer();
+        Destroy(gameObject, _lifeTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,16 +21,6 @@ public class EnemySpittle : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Player player))
         {
             player.TakeDamage(_damage);
-            Destroy(gameObject);
-        }
-    }
-
-    private void Destroyer()
-    {
-        _lifeTime -= Time.deltaTime;
-
-        if (_lifeTime <= 0)
-        {
             Destroy(gameObject);
         }
     }

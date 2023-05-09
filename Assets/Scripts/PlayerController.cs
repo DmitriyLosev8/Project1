@@ -71,9 +71,11 @@ public class PlayerController : MonoBehaviour
 
     private void Reflect()
     {
+        int numberOfChangeScale = 1;
+
         if ((_moveDirection.x > 0 && !_isLookRight) || (_moveDirection.x < 0 && _isLookRight))
         { 
-            transform.localScale *= new Vector2(-1, 1);
+            transform.localScale *= new Vector2(-numberOfChangeScale, numberOfChangeScale);
             _isLookRight = !_isLookRight;
         }
         _player.DetermineOfSideOfLook(_isLookRight);
@@ -81,8 +83,9 @@ public class PlayerController : MonoBehaviour
 
     private void Swim()
     {
-       _isMoveBlocked = true;
-        float swimSpeed = (_playerMover.Speed - 1) * Time.deltaTime;
+        int numberOfChangeSpeed = 1;
+        _isMoveBlocked = true;
+        float swimSpeed = (_playerMover.Speed - numberOfChangeSpeed) * Time.deltaTime;
         transform.Translate(swimSpeed * Vector2.right);
     }
 
@@ -97,34 +100,44 @@ public class PlayerController : MonoBehaviour
     
     private void OnWallJump()
     {
-        Vector2 wallJumpAngle; 
-        
-        if(_currentJumpCount == 1)
+        Vector2 wallJumpAngle;
+        float numberOfChangeAngleX;
+        float numberOfChangeAngleY;
+
+        if (_currentJumpCount == 1)
         {
-            wallJumpAngle = new Vector2(6.5f, 3f);
+            numberOfChangeAngleX = 6.5f;
+            numberOfChangeAngleY = 3f;
+            wallJumpAngle = new Vector2(numberOfChangeAngleX, numberOfChangeAngleY);
             WallJump(wallJumpAngle);
         }
 
         if (_currentJumpCount == 2)
         {
-            wallJumpAngle = new Vector2(10f, 10f);
+            numberOfChangeAngleX = 10f;
+            numberOfChangeAngleY = 10f;
+            wallJumpAngle = new Vector2(numberOfChangeAngleX, numberOfChangeAngleY);
             WallJump(wallJumpAngle);
         }
     }
    
     private void WallJump(Vector2 wallJumpAngle)
     {
+        int numberOfChangeSpeed = 1;
+        float numberOfChangeAngleX = 1.1f;
+        float numberOfChangeAngleY = 3.8f;
+
         if (_isOnWall && !_isGrounded)
         {
             _isMoveBlocked = true;
             _moveDirection.x = 0;
 
-            transform.localScale *= new Vector2(-1, 1);
+            transform.localScale *= new Vector2(-numberOfChangeSpeed, numberOfChangeSpeed);
             _isLookRight = !_isLookRight;
             
             if(_player.Level < _player.LevelOfExtraSkills)
             _playersRigidbody.velocity = 
-                    new Vector2(transform.localScale.x * wallJumpAngle.x * 1.1f, wallJumpAngle.y * 3.8f);
+                    new Vector2(transform.localScale.x * wallJumpAngle.x * numberOfChangeAngleX, wallJumpAngle.y * numberOfChangeAngleY);
             else
             _playersRigidbody.velocity = 
                     new Vector2(transform.localScale.x * wallJumpAngle.x, wallJumpAngle.y);  

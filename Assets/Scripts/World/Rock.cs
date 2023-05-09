@@ -11,7 +11,7 @@ public class Rock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("RockIgnore"))
+        if (!collision.gameObject.TryGetComponent(out RockIgnoreSurface rockIgnoreSurface))
         {
             if (collision.gameObject.TryGetComponent(out Player player))
                 player.TakeDamage(_damage);
@@ -20,7 +20,8 @@ public class Rock : MonoBehaviour
                 Destroy(gameObject);
 
             _damage = 30f;
-            Instantiate(_collisionEffect, transform.position, Quaternion.identity);   
+            Instantiate(_collisionEffect, transform.position, Quaternion.identity);
+            Debug.Log(collision.gameObject.name);
         }
     }
             

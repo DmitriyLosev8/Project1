@@ -18,7 +18,8 @@ public class Enemy : MonoBehaviour
     private float _timeBetweenSpit = 5;
     private float _patrolDistance;
     private float _speed;
-    private const string _isAttack = "IsAttack";
+   
+    private const string IsAttack = "IsAttack";
 
     public int Id => _id;
 
@@ -138,7 +139,7 @@ public class Enemy : MonoBehaviour
             if (enemySpitZone.IsEnemyNeedToSpit)
                 Spit(enemySpitZone);
                 
-            _animator.SetBool(_isAttack, enemySpitZone.IsEnemyNeedToSpit);
+            _animator.SetBool(IsAttack, enemySpitZone.IsEnemyNeedToSpit);
             yield return null;  
         }
     }
