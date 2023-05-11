@@ -23,7 +23,7 @@ public class SceneSwitcher : MonoBehaviour
     {
         MainMenu.PlayButtonClicked += LoadScene;
         MainMenu.ExitButtonClicked += OnExitButtonClicked;
-        Player.LevelChangedToNext += OnLevelChangedToNext;
+        LevelChanger.LevelChangedToNext += OnLevelChangedToNext;
         PauseMenu.LoadMainMenuButtonClicked += LoadMainMenu;
         Player.Died += OnPlayerDied;
     }
@@ -32,7 +32,7 @@ public class SceneSwitcher : MonoBehaviour
     {
         MainMenu.PlayButtonClicked -= LoadScene;
         MainMenu.ExitButtonClicked -= OnExitButtonClicked;
-        Player.LevelChangedToNext -= OnLevelChangedToNext;
+        LevelChanger.LevelChangedToNext -= OnLevelChangedToNext;
         PauseMenu.LoadMainMenuButtonClicked -= LoadMainMenu;
         Player.Died -= OnPlayerDied;
     }

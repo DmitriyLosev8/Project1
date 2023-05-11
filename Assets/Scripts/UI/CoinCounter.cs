@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CoinCounter : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private CoinAdder _coinAdder;
     [SerializeField] private TMP_Text _coinCounter;
 
     private void Start()
@@ -16,12 +16,12 @@ public class CoinCounter : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.CoinAdded += OnCoinAdded;
+        _coinAdder.CoinAdded += OnCoinAdded;
     }
 
     private void OnDisable()
     {
-        _player.CoinAdded -= OnCoinAdded;
+        _coinAdder.CoinAdded -= OnCoinAdded;
     }
 
     private void OnCoinAdded(int coins)

@@ -13,14 +13,14 @@ public class Boss : MonoBehaviour
     [SerializeField] private Transform _spittleSpawnPoint;
     [SerializeField] private float _delayOfSpit;
 
+    private const string IsAttack = "IsAttack";
+   
     private Animator _animator;
     private float _delayOfTeleport = 5f;
     private float _speedOfTeleport = 500;
     private float _timeBetweenSpit = 5;
     private int _offSet = -90;
     private bool _readyToAttack;
-   
-    private const string IsAttack = "IsAttack";
 
     public Player TargetPlayer => _targetPlayer;
    
@@ -43,22 +43,12 @@ public class Boss : MonoBehaviour
         Spit(); 
     }
 
-    public void TakeDamage(float damage)
+    private Vector3 DetermineDistanceToPlayer()
     {
-        _health -= damage;
-        
-        if(_health <= 0)
-        {
-            Die();
-        }     
+        Vector3 distanse = _targetPlayer.transform.position - transform.position;
+        return distanse;
     }
-
-    private void Die()
-    {
-        Died?.Invoke();
-        Destroy(gameObject);
-    }
-
+   
     private IEnumerator Teleport()  
     {
         float offSetOfTeleport = 3f;
@@ -86,10 +76,28 @@ public class Boss : MonoBehaviour
         }  
     }
 
+    private void TryToAttack()
+    {
+        Vector3 difference = DetermineDistanceToPlayer();
+        float distanceToAttack = 12;
+
+        if (difference.x < distanceToAttack && difference.y < distanceToAttack && difference.z < distanceToAttack)
+            _readyToAttack = true;
+        else
+            _readyToAttack = false;
+    }
+
+    private void SetSpitDirection()
+    {
+        Vector3 difference = DetermineDistanceToPlayer();
+        float rotateSpawnPointZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        _spittleSpawnPoint.transform.rotation = Quaternion.Euler(0, 0, rotateSpawnPointZ + _offSet);
+    }
+
     private void Spit()
     {
         if (_readyToAttack)
-        {    
+        {
             if (_timeBetweenSpit <= 0)
             {
                 Instantiate(_spittleTemplate, _spittleSpawnPoint.position, _spittleSpawnPoint.transform.rotation);
@@ -100,28 +108,20 @@ public class Boss : MonoBehaviour
         }
     }
 
-    private void SetSpitDirection()
+    public void TakeDamage(float damage)
     {
-        Vector3 difference = DetermineDistanceToPlayer();
-        float rotateSpawnPointZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        _spittleSpawnPoint.transform.rotation = Quaternion.Euler(0, 0, rotateSpawnPointZ + _offSet);
+        _health -= damage;
+
+        if (_health <= 0)
+        {
+            Die();
+        }
     }
-
-    private Vector3 DetermineDistanceToPlayer()
+   
+    private void Die()
     {
-        Vector3 distanse = _targetPlayer.transform.position - transform.position;
-        return distanse;
-    }
-
-    private void TryToAttack()
-    {
-        Vector3 difference = DetermineDistanceToPlayer();
-        float distanceToAttack = 12;
-
-        if (difference.x < distanceToAttack && difference.y < distanceToAttack && difference.z < distanceToAttack)
-            _readyToAttack = true;
-        else
-            _readyToAttack = false;
+        Died?.Invoke();
+        Destroy(gameObject);
     }
 }
 
